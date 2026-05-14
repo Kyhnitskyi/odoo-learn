@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="view_hr_hospital_disease_tree" model="ir.ui.view">
+        <field name="name">hr.hospital.disease.tree</field>
+        <field name="model">hr.hospital.disease</field>
+        <field name="arch" type="xml">
+            <list string="Види захворювань">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_hr_hospital_disease_form" model="ir.ui.view">
+        <field name="name">hr.hospital.disease.form</field>
+        <field name="model">hr.hospital.disease</field>
+        <field name="arch" type="xml">
+            <form string="Вид захворювання">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="active"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_hr_hospital_disease" model="ir.actions.act_window">
+        <field name="name">Види захворювань</field>
+        <field name="res_model">hr.hospital.disease</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

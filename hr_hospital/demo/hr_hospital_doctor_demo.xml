@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="doctor_kovalenko" model="hr.hospital.doctor">
+            <field name="name">Коваленко Олег Михайлович</field>
+            <field name="specialization">Терапевт</field>
+            <field name="phone">+380501234567</field>
+            <field name="email">kovalenko@hospital.ua</field>
+        </record>
+
+        <record id="doctor_shevchenko" model="hr.hospital.doctor">
+            <field name="name">Шевченко Ірина Василівна</field>
+            <field name="specialization">Кардіолог</field>
+            <field name="phone">+380507654321</field>
+            <field name="email">shevchenko@hospital.ua</field>
+            <field name="supervising_doctor_id" ref="doctor_kovalenko"/>
+        </record>
+
+        <record id="doctor_bondarenko" model="hr.hospital.doctor">
+            <field name="name">Бондаренко Сергій Петрович</field>
+            <field name="specialization">Хірург</field>
+            <field name="phone">+380509876543</field>
+            <field name="email">bondarenko@hospital.ua</field>
+            <field name="supervising_doctor_id" ref="doctor_kovalenko"/>
+        </record>
+
+    </data>
+</odoo>

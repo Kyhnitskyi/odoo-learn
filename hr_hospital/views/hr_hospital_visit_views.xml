@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View -->
+    <record id="view_hr_hospital_visit_tree" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.tree</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <list string="Візити пацієнтів">
+                <field name="visit_date"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="disease_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_hr_hospital_visit_form" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.form</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <form string="Візит пацієнта">
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="scheduled,in_progress,done"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Основна інформація">
+                            <field name="patient_id"/>
+                            <field name="doctor_id"/>
+                            <field name="visit_date"/>
+                            <field name="disease_id"/>
+                        </group>
+                        <group string="Статус">
+                            <field name="state"/>
+                        </group>
+                    </group>
+                    <group string="Нотатки лікаря">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_hr_hospital_visit" model="ir.actions.act_window">
+        <field name="name">Візити пацієнтів</field>
+        <field name="res_model">hr.hospital.visit</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

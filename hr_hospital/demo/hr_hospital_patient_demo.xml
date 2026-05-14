@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="patient_melnyk" model="hr.hospital.patient">
+            <field name="name">Мельник Андрій Іванович</field>
+            <field name="birth_date">1985-03-15</field>
+            <field name="gender">male</field>
+            <field name="phone">+380631112233</field>
+            <field name="email">melnyk@gmail.com</field>
+            <field name="doctor_id" ref="doctor_kovalenko"/>
+        </record>
+
+        <record id="patient_kravchenko" model="hr.hospital.patient">
+            <field name="name">Кравченко Олена Сергіївна</field>
+            <field name="birth_date">1972-07-22</field>
+            <field name="gender">female</field>
+            <field name="phone">+380634445566</field>
+            <field name="email">kravchenko@gmail.com</field>
+            <field name="doctor_id" ref="doctor_shevchenko"/>
+        </record>
+
+        <record id="patient_lysenko" model="hr.hospital.patient">
+            <field name="name">Лисенко Василь Миколайович</field>
+            <field name="birth_date">1990-11-08</field>
+            <field name="gender">male</field>
+            <field name="phone">+380637778899</field>
+            <field name="email">lysenko@gmail.com</field>
+            <field name="doctor_id" ref="doctor_bondarenko"/>
+        </record>
+
+    </data>
+</odoo>
