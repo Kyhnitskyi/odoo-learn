@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="disease_cardiovascular" model="hr.hospital.disease">
+            <field name="name">Серцево-судинні захворювання</field>
+            <field name="description">Захворювання серця та судин.</field>
+        </record>
+
+        <record id="disease_arterial_hypertension" model="hr.hospital.disease">
+            <field name="name">Артеріальна гіпертензія</field>
+            <field name="description">Стійке підвищення артеріального тиску.</field>
+            <field name="parent_id" ref="disease_cardiovascular"/>
+        </record>
+
+        <record id="disease_hypertensive_crisis" model="hr.hospital.disease">
+            <field name="name">Гіпертонічний криз</field>
+            <field name="description">Раптове значне підвищення артеріального тиску.</field>
+            <field name="parent_id" ref="disease_arterial_hypertension"/>
+        </record>
+
+        <record id="disease_ischemic_heart_disease" model="hr.hospital.disease">
+            <field name="name">Ішемічна хвороба серця</field>
+            <field name="description">Порушення кровопостачання серцевого м'яза.</field>
+            <field name="parent_id" ref="disease_cardiovascular"/>
+        </record>
+
+        <record id="disease_myocardial_infarction" model="hr.hospital.disease">
+            <field name="name">Інфаркт міокарда</field>
+            <field name="description">Гостре порушення кровопостачання ділянки серцевого м'яза.</field>
+            <field name="parent_id" ref="disease_ischemic_heart_disease"/>
+        </record>
+
+    </data>
+</odoo>

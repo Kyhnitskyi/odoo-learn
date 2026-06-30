@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="visit_melnyk_1" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_melnyk"/>
+            <field name="doctor_id" ref="doctor_kovalenko"/>
+            <field name="disease_id" ref="disease_arterial_hypertension"/>
+            <field name="scheduled_date">2026-05-10 09:00:00</field>
+            <field name="actual_date">2026-05-10 09:15:00</field>
+            <field name="state">done</field>
+            <field name="summary">&lt;p&gt;Пацієнт скаржиться на головний біль. Артеріальний тиск 150/95. Призначено медикаментозну терапію.&lt;/p&gt;</field>
+            <field name="notes">Контрольний візит через 2 тижні.</field>
+        </record>
+
+        <record id="visit_melnyk_2" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_melnyk"/>
+            <field name="doctor_id" ref="doctor_kovalenko"/>
+            <field name="disease_id" ref="disease_arterial_hypertension"/>
+            <field name="scheduled_date">2026-07-01 09:00:00</field>
+            <field name="state">scheduled</field>
+        </record>
+
+        <record id="visit_kravchenko_1" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_kravchenko"/>
+            <field name="doctor_id" ref="doctor_shevchenko"/>
+            <field name="disease_id" ref="disease_ischemic_heart_disease"/>
+            <field name="scheduled_date">2026-04-20 11:30:00</field>
+            <field name="actual_date">2026-04-20 11:40:00</field>
+            <field name="state">done</field>
+            <field name="summary">&lt;p&gt;Проведено ЕКГ. Виявлено ознаки ішемії. Рекомендовано подальше спостереження кардіолога.&lt;/p&gt;</field>
+        </record>
+
+        <record id="visit_kravchenko_2" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_kravchenko"/>
+            <field name="doctor_id" ref="doctor_shevchenko"/>
+            <field name="scheduled_date">2026-06-25 14:00:00</field>
+            <field name="state">cancelled</field>
+            <field name="notes">Пацієнтка перенесла візит за власним бажанням.</field>
+        </record>
+
+        <record id="visit_lysenko_1" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_lysenko"/>
+            <field name="doctor_id" ref="doctor_bondarenko"/>
+            <field name="disease_id" ref="hr_hospital.disease_flu"/>
+            <field name="scheduled_date">2026-05-05 10:00:00</field>
+            <field name="actual_date">2026-05-05 10:05:00</field>
+            <field name="state">done</field>
+            <field name="summary">&lt;p&gt;Підтверджено грип. Призначено симптоматичне лікування та постільний режим.&lt;/p&gt;</field>
+        </record>
+
+        <record id="visit_lysenko_2" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_lysenko"/>
+            <field name="doctor_id" ref="doctor_bondarenko"/>
+            <field name="scheduled_date">2026-07-15 13:00:00</field>
+            <field name="state">scheduled</field>
+        </record>
+
+    </data>
+</odoo>

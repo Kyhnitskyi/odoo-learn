@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- List View -->
+    <record id="view_hr_hospital_patient_list" model="ir.ui.view">
+        <field name="name">hr.hospital.patient.list</field>
+        <field name="model">hr.hospital.patient</field>
+        <field name="arch" type="xml">
+            <list string="Пацієнти">
+                <field name="name"/>
+                <field name="birth_date"/>
+                <field name="gender"/>
+                <field name="phone"/>
+                <field name="personal_doctor_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_hr_hospital_patient_form" model="ir.ui.view">
+        <field name="name">hr.hospital.patient.form</field>
+        <field name="model">hr.hospital.patient</field>
+        <field name="arch" type="xml">
+            <form string="Пацієнт">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="ПІБ пацієнта"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Особиста інформація">
+                            <field name="birth_date"/>
+                            <field name="age"/>
+                            <field name="gender"/>
+                            <field name="blood_type"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Контакти та лікар">
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="insurance_number"/>
+                            <field name="personal_doctor_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Візити">
+                            <field name="visit_ids">
+                                <list>
+                                    <field name="scheduled_date"/>
+                                    <field name="actual_date"/>
+                                    <field name="doctor_id"/>
+                                    <field name="disease_id"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Історія персональних лікарів">
+                            <field name="doctor_history_ids" context="{'active_test': False}">
+                                <list editable="bottom">
+                                    <field name="doctor_id"/>
+                                    <field name="assignment_date"/>
+                                    <field name="change_date"/>
+                                    <field name="active"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_hr_hospital_patient" model="ir.actions.act_window">
+        <field name="name">Пацієнти</field>
+        <field name="res_model">hr.hospital.patient</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

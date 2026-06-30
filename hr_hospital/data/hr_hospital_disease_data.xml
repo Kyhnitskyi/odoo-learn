@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="disease_flu" model="hr.hospital.disease">
+            <field name="name">Грип</field>
+            <field name="description">Гостра респіраторна вірусна інфекція, що викликається вірусами грипу.</field>
+        </record>
+
+        <record id="disease_hypertension" model="hr.hospital.disease">
+            <field name="name">Гіпертонія</field>
+            <field name="description">Хронічне захворювання, що характеризується стійким підвищенням артеріального тиску.</field>
+        </record>
+
+        <record id="disease_diabetes" model="hr.hospital.disease">
+            <field name="name">Цукровий діабет</field>
+            <field name="description">Хронічне метаболічне захворювання, що характеризується підвищеним рівнем глюкози в крові.</field>
+        </record>
+
+    </data>
+</odoo>

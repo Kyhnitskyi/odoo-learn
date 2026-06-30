@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="doctor_kovalenko" model="hr.hospital.doctor">
+            <field name="name">Коваленко Олег Михайлович</field>
+            <field name="specialization">Терапевт</field>
+            <field name="phone">+380501234567</field>
+            <field name="email">kovalenko@hospital.ua</field>
+            <field name="category_id" ref="doctor_category_senior"/>
+            <field name="gender">male</field>
+            <field name="birth_date">1975-04-12</field>
+            <field name="blood_type">a_plus</field>
+        </record>
+
+        <record id="doctor_shevchenko" model="hr.hospital.doctor">
+            <field name="name">Шевченко Ірина Василівна</field>
+            <field name="specialization">Кардіолог</field>
+            <field name="phone">+380507654321</field>
+            <field name="email">shevchenko@hospital.ua</field>
+            <field name="supervising_doctor_id" ref="doctor_kovalenko"/>
+            <field name="category_id" ref="doctor_category_specialist"/>
+            <field name="gender">female</field>
+            <field name="birth_date">1982-09-23</field>
+            <field name="blood_type">o_plus</field>
+        </record>
+
+        <record id="doctor_bondarenko" model="hr.hospital.doctor">
+            <field name="name">Бондаренко Сергій Петрович</field>
+            <field name="specialization">Хірург</field>
+            <field name="phone">+380509876543</field>
+            <field name="email">bondarenko@hospital.ua</field>
+            <field name="supervising_doctor_id" ref="doctor_kovalenko"/>
+            <field name="category_id" ref="doctor_category_specialist"/>
+            <field name="gender">male</field>
+            <field name="birth_date">1978-12-01</field>
+            <field name="blood_type">b_minus</field>
+        </record>
+
+        <record id="doctor_tkachenko" model="hr.hospital.doctor">
+            <field name="name">Ткаченко Марія Олександрівна</field>
+            <field name="specialization">Терапевт</field>
+            <field name="phone">+380632223344</field>
+            <field name="email">tkachenko@hospital.ua</field>
+            <field name="category_id" ref="doctor_category_intern"/>
+            <field name="mentor_id" ref="doctor_kovalenko"/>
+            <field name="gender">female</field>
+            <field name="birth_date">1998-02-17</field>
+            <field name="blood_type">ab_plus</field>
+        </record>
+
+    </data>
+</odoo>

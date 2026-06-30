@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Попередній персональний лікар пацієнта Мельника -->
+        <record id="doctor_history_melnyk_1" model="hr.hospital.doctor.history">
+            <field name="patient_id" ref="patient_melnyk"/>
+            <field name="doctor_id" ref="doctor_shevchenko"/>
+            <field name="assignment_date">2018-05-01</field>
+            <field name="change_date">2021-01-10</field>
+            <field name="active">0</field>
+        </record>
+
+        <!-- Поточний персональний лікар пацієнта Мельника -->
+        <record id="doctor_history_melnyk_2" model="hr.hospital.doctor.history">
+            <field name="patient_id" ref="patient_melnyk"/>
+            <field name="doctor_id" ref="doctor_kovalenko"/>
+            <field name="assignment_date">2021-01-10</field>
+            <field name="active">1</field>
+        </record>
+
+        <!-- Поточний персональний лікар пацієнтки Кравченко -->
+        <record id="doctor_history_kravchenko_1" model="hr.hospital.doctor.history">
+            <field name="patient_id" ref="patient_kravchenko"/>
+            <field name="doctor_id" ref="doctor_shevchenko"/>
+            <field name="assignment_date">2019-03-15</field>
+            <field name="active">1</field>
+        </record>
+
+        <!-- Поточний персональний лікар пацієнта Лисенка -->
+        <record id="doctor_history_lysenko_1" model="hr.hospital.doctor.history">
+            <field name="patient_id" ref="patient_lysenko"/>
+            <field name="doctor_id" ref="doctor_bondarenko"/>
+            <field name="assignment_date">2021-07-01</field>
+            <field name="active">1</field>
+        </record>
+
+    </data>
+</odoo>

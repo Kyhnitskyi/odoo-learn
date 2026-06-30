@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- List View -->
+    <record id="view_hr_hospital_visit_list" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.list</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <list string="Візити пацієнтів">
+                <field name="scheduled_date"/>
+                <field name="actual_date"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="disease_id"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_hr_hospital_visit_form" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.form</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <form string="Візит пацієнта">
+                <header>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="scheduled,done,cancelled"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Основна інформація">
+                            <field name="patient_id"/>
+                            <field name="doctor_id" readonly="state == 'done'"/>
+                            <field name="disease_id"/>
+                        </group>
+                        <group string="Дата та час">
+                            <field name="scheduled_date" readonly="state == 'done'"/>
+                            <field name="actual_date" readonly="state == 'done'"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Епікриз">
+                            <field name="summary"/>
+                        </page>
+                        <page string="Нотатки лікаря">
+                            <field name="notes" nolabel="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_hr_hospital_visit" model="ir.actions.act_window">
+        <field name="name">Візити пацієнтів</field>
+        <field name="res_model">hr.hospital.visit</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>
