@@ -6,8 +6,8 @@
             <field name="patient_id" ref="patient_melnyk"/>
             <field name="doctor_id" ref="doctor_kovalenko"/>
             <field name="disease_id" ref="disease_arterial_hypertension"/>
-            <field name="scheduled_date">2026-05-10 09:00:00</field>
-            <field name="actual_date">2026-05-10 09:15:00</field>
+            <field name="scheduled_date">2026-01-10 09:00:00</field>
+            <field name="actual_date">2026-01-10 09:15:00</field>
             <field name="state">done</field>
             <field name="summary">&lt;p&gt;Пацієнт скаржиться на головний біль. Артеріальний тиск 150/95. Призначено медикаментозну терапію.&lt;/p&gt;</field>
             <field name="notes">Контрольний візит через 2 тижні.</field>
@@ -25,8 +25,8 @@
             <field name="patient_id" ref="patient_kravchenko"/>
             <field name="doctor_id" ref="doctor_shevchenko"/>
             <field name="disease_id" ref="disease_ischemic_heart_disease"/>
-            <field name="scheduled_date">2026-04-20 11:30:00</field>
-            <field name="actual_date">2026-04-20 11:40:00</field>
+            <field name="scheduled_date">2026-02-20 11:30:00</field>
+            <field name="actual_date">2026-02-20 11:40:00</field>
             <field name="state">done</field>
             <field name="summary">&lt;p&gt;Проведено ЕКГ. Виявлено ознаки ішемії. Рекомендовано подальше спостереження кардіолога.&lt;/p&gt;</field>
         </record>
@@ -43,8 +43,8 @@
             <field name="patient_id" ref="patient_lysenko"/>
             <field name="doctor_id" ref="doctor_bondarenko"/>
             <field name="disease_id" ref="hr_hospital.disease_flu"/>
-            <field name="scheduled_date">2026-05-05 10:00:00</field>
-            <field name="actual_date">2026-05-05 10:05:00</field>
+            <field name="scheduled_date">2026-03-05 10:00:00</field>
+            <field name="actual_date">2026-03-05 10:05:00</field>
             <field name="state">done</field>
             <field name="summary">&lt;p&gt;Підтверджено грип. Призначено симптоматичне лікування та постільний режим.&lt;/p&gt;</field>
         </record>
@@ -54,6 +54,68 @@
             <field name="doctor_id" ref="doctor_bondarenko"/>
             <field name="scheduled_date">2026-07-15 13:00:00</field>
             <field name="state">scheduled</field>
+        </record>
+
+        <!-- 6 нових демо-записів -->
+        <record id="visit_melnyk_3" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_melnyk"/>
+            <field name="doctor_id" ref="doctor_kovalenko"/>
+            <field name="disease_id" ref="disease_hypertensive_crisis"/>
+            <field name="scheduled_date">2026-04-15 10:00:00</field>
+            <field name="actual_date">2026-04-15 10:20:00</field>
+            <field name="state">done</field>
+            <field name="summary">&lt;p&gt;Гіпертонічний криз. Екстрена допомога надана. Тиск знижено до норми.&lt;/p&gt;</field>
+            <field name="notes">Пацієнт госпіталізований на 3 дні.</field>
+        </record>
+
+        <record id="visit_kravchenko_3" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_kravchenko"/>
+            <field name="doctor_id" ref="doctor_shevchenko"/>
+            <field name="disease_id" ref="disease_myocardial_infarction"/>
+            <field name="scheduled_date">2026-05-10 09:30:00</field>
+            <field name="actual_date">2026-05-10 09:45:00</field>
+            <field name="state">done</field>
+            <field name="summary">&lt;p&gt;Підозра на інфаркт міокарда. Направлено на стаціонарне лікування.&lt;/p&gt;</field>
+        </record>
+
+        <record id="visit_lysenko_3" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_lysenko"/>
+            <field name="doctor_id" ref="doctor_tkachenko"/>
+            <field name="disease_id" ref="hr_hospital.disease_diabetes"/>
+            <field name="scheduled_date">2026-03-22 11:00:00</field>
+            <field name="actual_date">2026-03-22 11:10:00</field>
+            <field name="state">done</field>
+            <field name="summary">&lt;p&gt;Діагностовано цукровий діабет 2 типу. Призначено дієту та метформін.&lt;/p&gt;</field>
+            <field name="notes">Контроль цукру крові через місяць.</field>
+        </record>
+
+        <record id="visit_melnyk_4" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_melnyk"/>
+            <field name="doctor_id" ref="doctor_bondarenko"/>
+            <field name="disease_id" ref="hr_hospital.disease_flu"/>
+            <field name="scheduled_date">2026-06-05 08:30:00</field>
+            <field name="actual_date">2026-06-05 08:40:00</field>
+            <field name="state">done</field>
+            <field name="summary">&lt;p&gt;Грип з ускладненнями. Призначено антибіотики.&lt;/p&gt;</field>
+        </record>
+
+        <record id="visit_kravchenko_4" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_kravchenko"/>
+            <field name="doctor_id" ref="doctor_kovalenko"/>
+            <field name="disease_id" ref="hr_hospital.disease_hypertension"/>
+            <field name="scheduled_date">2026-07-20 15:00:00</field>
+            <field name="state">scheduled</field>
+            <field name="notes">Первинний прийом після відпустки лікаря.</field>
+        </record>
+
+        <record id="visit_lysenko_4" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_lysenko"/>
+            <field name="doctor_id" ref="doctor_shevchenko"/>
+            <field name="disease_id" ref="disease_cardiovascular"/>
+            <field name="scheduled_date">2026-05-28 14:30:00</field>
+            <field name="actual_date">2026-05-28 14:35:00</field>
+            <field name="state">done</field>
+            <field name="summary">&lt;p&gt;Профілактичний огляд серцево-судинної системи. Відхилень не виявлено.&lt;/p&gt;</field>
         </record>
 
     </data>

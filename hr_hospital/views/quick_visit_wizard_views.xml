@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form View -->
+    <record id="view_quick_visit_wizard_form" model="ir.ui.view">
+        <field name="name">quick.visit.wizard.form</field>
+        <field name="model">quick.visit.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Записатись до лікаря">
+                <group>
+                    <field name="patient_id"/>
+                    <field name="doctor_id"/>
+                    <field name="scheduled_date"/>
+                    <field name="disease_id"/>
+                    <field name="notes" placeholder="Нотатки..."/>
+                </group>
+                <footer>
+                    <button name="action_create_visit"
+                            string="Записатись"
+                            type="object"
+                            class="btn-primary"/>
+                    <button string="Скасувати" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>

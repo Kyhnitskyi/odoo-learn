@@ -23,7 +23,22 @@
         <field name="model">hr.hospital.patient</field>
         <field name="arch" type="xml">
             <form string="Пацієнт">
+                <header>
+                    <button string="Записатись до лікаря"
+                            type="object"
+                            name="action_quick_visit_wizard"
+                            class="btn-primary"/>
+                </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button"
+                                type="object"
+                                name="action_view_visits"
+                                icon="fa-calendar">
+                            <field name="visit_count" widget="statinfo"
+                                   string="Візити"/>
+                        </button>
+                    </div>
                     <div class="oe_title">
                         <h1>
                             <field name="name" placeholder="ПІБ пацієнта"/>
@@ -69,6 +84,28 @@
                     </notebook>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_hr_hospital_patient_search" model="ir.ui.view">
+        <field name="name">hr.hospital.patient.search</field>
+        <field name="model">hr.hospital.patient</field>
+        <field name="arch" type="xml">
+            <search string="Пошук пацієнтів">
+                <field name="name" string="ПІБ пацієнта"/>
+                <field name="phone" string="Телефон"/>
+                <field name="personal_doctor_id" string="Лікар"/>
+                <separator/>
+                <filter name="active" string="Активні"
+                        domain="[('active', '=', True)]"/>
+                <group>
+                    <filter name="group_by_doctor" string="За лікарем"
+                            context="{'group_by': 'personal_doctor_id'}"/>
+                    <filter name="group_by_gender" string="За статтю"
+                            context="{'group_by': 'gender'}"/>
+                </group>
+            </search>
         </field>
     </record>
 

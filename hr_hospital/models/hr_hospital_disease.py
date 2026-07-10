@@ -37,10 +37,12 @@ class HrHospitalDisease(models.Model):
 
     @api.constrains('parent_id')
     def _check_parent_recursion(self):
-        if not self._check_recursion():
+        if self._has_cycle():
             raise ValidationError(
-                'Неможливо встановити батьківське захворювання: '
-                'виявлено циклічну залежність.'
+                self.env._(
+                    'Неможливо встановити батьківське захворювання: '
+                    'виявлено циклічну залежність.'
+                )
             )
 
     @api.depends('name', 'parent_id')
@@ -50,7 +52,8 @@ class HrHospitalDisease(models.Model):
             current = record
             visited_ids = set()
             while current and current.id not in visited_ids:
-                names.append(current.name)
+                if current.name:
+                    names.append(current.name)
                 visited_ids.add(current.id)
                 current = current.parent_id
             record.display_name = ' / '.join(reversed(names))

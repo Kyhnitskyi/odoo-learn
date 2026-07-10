@@ -49,5 +49,29 @@
             <field name="blood_type">ab_plus</field>
         </record>
 
+        <record id="doctor_kovalchuk" model="hr.hospital.doctor">
+            <field name="name">Ковальчук Дмитро Олексійович</field>
+            <field name="specialization">Кардіолог</field>
+            <field name="phone">+380671234500</field>
+            <field name="email">kovalchuk@hospital.ua</field>
+            <field name="category_id" ref="doctor_category_intern"/>
+            <field name="mentor_id" ref="doctor_shevchenko"/>
+            <field name="gender">male</field>
+            <field name="birth_date">2000-06-14</field>
+            <field name="blood_type">o_plus</field>
+        </record>
+
+        <record id="doctor_savchenko" model="hr.hospital.doctor">
+            <field name="name">Савченко Юлія Вікторівна</field>
+            <field name="specialization">Хірург</field>
+            <field name="phone">+380679876500</field>
+            <field name="email">savchenko@hospital.ua</field>
+            <field name="category_id" ref="doctor_category_intern"/>
+            <field name="mentor_id" ref="doctor_bondarenko"/>
+            <field name="gender">female</field>
+            <field name="birth_date">2001-03-28</field>
+            <field name="blood_type">a_minus</field>
+        </record>
+
     </data>
 </odoo>

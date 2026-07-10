@@ -18,9 +18,7 @@ class HrHospitalDoctor(models.Model):
     phone = fields.Char(
         string='Телефон',
     )
-    email = fields.Char(
-        string='Email',
-    )
+    email = fields.Char()
     supervising_doctor_id = fields.Many2one(
         comodel_name='hr.hospital.doctor',
         string='Лікар, що спостерігає',
@@ -44,6 +42,11 @@ class HrHospitalDoctor(models.Model):
         string='Ментор',
         ondelete='set null',
     )
+    intern_ids = fields.One2many(
+        comodel_name='hr.hospital.doctor',
+        inverse_name='mentor_id',
+        string='Інтерни',
+    )
     patient_ids = fields.One2many(
         comodel_name='hr.hospital.patient',
         inverse_name='personal_doctor_id',
@@ -64,10 +67,23 @@ class HrHospitalDoctor(models.Model):
                 intern_category and record.category_id == intern_category
             )
 
+    def action_quick_visit_to_doctor(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Записатись до лікаря',
+            'res_model': 'hr.hospital.visit',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {'default_doctor_id': self.id},
+        }
+
     @api.constrains('mentor_id')
     def _check_mentor_is_not_intern(self):
         for record in self:
             if record.mentor_id and record.mentor_id.is_intern:
                 raise ValidationError(
-                    'Ментором не може бути лікар, який є інтерном.'
+                    self.env._(
+                        'Ментором не може бути лікар, який є інтерном.'
+                    )
                 )

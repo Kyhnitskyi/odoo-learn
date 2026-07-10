@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class HrHospitalPatient(models.Model):
@@ -36,7 +36,44 @@ class HrHospitalPatient(models.Model):
         inverse_name='patient_id',
         string='Візити',
     )
+    visit_count = fields.Integer(
+        string='Кількість візитів',
+        compute='_compute_visit_count',
+    )
     active = fields.Boolean(
         string='Активний',
         default=True,
     )
+
+    @api.depends('visit_ids')
+    def _compute_visit_count(self):
+        for record in self:
+            record.visit_count = len(record.visit_ids)
+
+    def action_view_visits(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Візити пацієнта',
+            'res_model': 'hr.hospital.visit',
+            'view_mode': 'list,form',
+            'domain': [('patient_id', '=', self.id)],
+            'context': {'default_patient_id': self.id},
+            'target': 'current',
+        }
+
+    def action_quick_visit_wizard(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Записатись до лікаря',
+            'res_model': 'quick.visit.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_patient_id': self.id,
+                'default_doctor_id': self.personal_doctor_id.id
+                if self.personal_doctor_id
+                else False,
+            },
+        }
