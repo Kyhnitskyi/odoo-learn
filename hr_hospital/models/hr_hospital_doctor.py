@@ -52,10 +52,24 @@ class HrHospitalDoctor(models.Model):
         inverse_name='personal_doctor_id',
         string='Пацієнти',
     )
+    visit_ids = fields.One2many(
+        comodel_name='hr.hospital.visit',
+        inverse_name='doctor_id',
+        string='Візити',
+    )
+    intern_names = fields.Char(
+        string='Список інтернів',
+        compute='_compute_intern_names',
+    )
     active = fields.Boolean(
         string='Активний',
         default=True,
     )
+
+    @api.depends('intern_ids.name')
+    def _compute_intern_names(self):
+        for record in self:
+            record.intern_names = ', '.join(record.intern_ids.mapped('name'))
 
     @api.depends('category_id')
     def _compute_is_intern(self):

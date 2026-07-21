@@ -96,11 +96,26 @@
         <field name="arch" type="xml">
             <kanban default_group_by="category_id">
                 <templates>
+                    <t t-name="menu">
+                        <a role="menuitem" type="open" class="dropdown-item">Редагувати</a>
+                        <a role="menuitem" type="object" name="action_archive"
+                           class="dropdown-item" t-if="record.active.raw_value">Архівувати</a>
+                        <a role="menuitem" type="object" name="action_unarchive"
+                           class="dropdown-item" t-if="!record.active.raw_value">Розархівувати</a>
+                        <a role="menuitem" t-if="widget.deletable" type="delete"
+                           class="dropdown-item">Видалити</a>
+                    </t>
                     <t t-name="card">
                         <field name="is_intern" invisible="1"/>
-                        <field name="name" class="fw-bold"/>
+                        <field name="intern_names" invisible="1"/>
+                        <field name="name" class="fw-bold fs-5"/>
                         <div class="text-muted">
                             <field name="specialization"/>
+                        </div>
+                        <div t-if="record.category_id.raw_value" class="mt-1">
+                            <span class="badge text-bg-secondary">
+                                <field name="category_id"/>
+                            </span>
                         </div>
                         <div>
                             <i class="fa fa-phone me-1" title="Телефон" role="img"/>
@@ -108,6 +123,10 @@
                         </div>
                         <div t-if="record.is_intern.raw_value" class="mt-1">
                             <span class="badge text-bg-info">Інтерн</span>
+                        </div>
+                        <div t-if="record.intern_names.raw_value" class="mt-2">
+                            <strong>Інтерни:</strong>
+                            <field name="intern_names"/>
                         </div>
                         <div class="mt-2">
                             <button name="action_quick_visit_to_doctor"

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_hr_hospital_doctor_document">
+        <t t-call="web.html_container">
+            <t t-set="company" t-value="res_company"/>
+            <t t-set="visit_state_colors" t-value="{
+                'scheduled': '#fff3cd',
+                'done': '#d4edda',
+                'cancelled': '#f8d7da',
+            }"/>
+            <t t-foreach="docs" t-as="doctor">
+
+                <div t-attf-class="header o_company_#{company.id}_layout">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <img t-if="company.logo" class="o_company_logo_small"
+                             t-att-src="image_data_uri(company.logo)" alt="Логотип"/>
+                        <div class="text-end">
+                            <strong t-field="company.name"/>
+                            <div t-field="company.partner_id"
+                                 t-options='{"widget": "contact", "fields": ["address", "phone", "email"], "no_marker": true}'/>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="article" t-att-data-oe-model="doctor._name" t-att-data-oe-id="doctor.id">
+                    <div class="page">
+
+                        <div class="text-center mb-4">
+                            <h2 class="mb-0"><span t-field="doctor.name"/></h2>
+                            <h4 class="text-muted" t-if="doctor.specialization">
+                                <span t-field="doctor.specialization"/>
+                            </h4>
+                        </div>
+
+                        <h3>Історія візитів</h3>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Дата та час візиту</th>
+                                    <th>Пацієнт</th>
+                                    <th>Хвороба</th>
+                                    <th>Статус</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doctor.visit_ids" t-as="visit"
+                                    t-attf-style="{{ 'background-color: %s;' % visit_state_colors.get(visit.state, '') }}">
+                                    <td><span t-field="visit.scheduled_date"/></td>
+                                    <td><span t-field="visit.patient_id.name"/></td>
+                                    <td><span t-field="visit.disease_id.name"/></td>
+                                    <td><span t-field="visit.state"/></td>
+                                </tr>
+                                <tr t-if="not doctor.visit_ids">
+                                    <td colspan="4" class="text-center text-muted">Візитів немає</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3 class="mt-4">Пацієнти лікаря</h3>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ПІБ пацієнта</th>
+                                    <th>Стать</th>
+                                    <th>Дата народження</th>
+                                    <th>Телефон</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doctor.patient_ids" t-as="patient">
+                                    <td><span t-field="patient.name"/></td>
+                                    <td><span t-field="patient.gender"/></td>
+                                    <td><span t-field="patient.birth_date"/></td>
+                                    <td><span t-field="patient.phone"/></td>
+                                </tr>
+                                <tr t-if="not doctor.patient_ids">
+                                    <td colspan="4" class="text-center text-muted">Пацієнтів немає</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+                <div t-attf-class="footer o_company_#{company.id}_layout">
+                    <div class="d-flex justify-content-between border-top pt-2 text-muted">
+                        <span>
+                            Дата та час друку:
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d.%m.%Y %H:%M')"/>
+                        </span>
+                        <span t-if="company.city">Місто: <span t-field="company.city"/></span>
+                    </div>
+                </div>
+
+            </t>
+        </t>
+    </template>
+
+    <template id="report_hr_hospital_doctor">
+        <t t-call="hr_hospital.report_hr_hospital_doctor_document"/>
+    </template>
+
+</odoo>

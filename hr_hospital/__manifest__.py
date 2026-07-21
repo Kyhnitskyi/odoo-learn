@@ -1,6 +1,6 @@
 {
     'name': 'HR Hospital',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'summary': 'Модуль для автоматизації лікарні: облік лікарів та пацієнтів',
     'description': """
         Модуль для ведення обліку лікарів, пацієнтів,
@@ -37,6 +37,8 @@
         'views/disease_report_wizard_views.xml',
         'views/quick_visit_wizard_views.xml',
         'views/hr_hospital_menu.xml',
+        'report/hr_hospital_doctor_templates.xml',
+        'report/hr_hospital_doctor_report.xml',
     ],
     'demo': [
         'demo/hr_hospital_doctor_demo.xml',
