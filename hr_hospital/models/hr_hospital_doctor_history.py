@@ -2,6 +2,8 @@ from odoo import api, fields, models
 
 
 class HrHospitalDoctorHistory(models.Model):
+    """Історія призначень персонального лікаря пацієнту."""
+
     _name = 'hr.hospital.doctor.history'
     _description = 'Історія персональних лікарів'
     _order = 'assignment_date desc, id desc'
@@ -33,6 +35,7 @@ class HrHospitalDoctorHistory(models.Model):
 
     @api.onchange('assignment_date', 'change_date')
     def _onchange_dates_check(self):
+        """Попередити, якщо дата зміни лікаря раніша за дату призначення."""
         if (
             self.assignment_date
             and self.change_date
@@ -55,6 +58,7 @@ class HrHospitalDoctorHistory(models.Model):
         'assignment_date',
     )
     def _compute_display_name(self):
+        """Побудувати назву запису як "Пацієнт - Лікар (Категорія) Дата"."""
         for record in self:
             category_name = record.doctor_id.category_id.name or ''
             record.display_name = '%s - %s (%s) %s' % (

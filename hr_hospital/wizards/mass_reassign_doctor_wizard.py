@@ -2,6 +2,8 @@ from odoo import fields, models
 
 
 class MassReassignDoctorWizard(models.TransientModel):
+    """Візард масової зміни персонального лікаря для групи пацієнтів."""
+
     _name = 'mass.reassign.doctor.wizard'
     _description = 'Масове перевизначення персонального лікаря'
 
@@ -17,6 +19,7 @@ class MassReassignDoctorWizard(models.TransientModel):
     )
 
     def action_reassign_doctor(self):
+        """Призначити нового лікаря обраним пацієнтам і оновити історію."""
         self.ensure_one()
         patient_model = self.env['hr.hospital.patient']
         history_model = self.env['hr.hospital.doctor.history']

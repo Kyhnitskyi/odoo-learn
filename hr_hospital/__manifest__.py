@@ -22,6 +22,7 @@
     'category': 'Healthcare',
     'depends': ['base'],
     'data': [
+        'security/hr_hospital_security.xml',
         'security/ir.model.access.csv',
         'data/hr_hospital_doctor_category_data.xml',
         'data/hr_hospital_disease_data.xml',

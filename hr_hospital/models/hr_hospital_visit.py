@@ -3,6 +3,8 @@ from odoo.exceptions import UserError
 
 
 class HrHospitalVisit(models.Model):
+    """Візит пацієнта до лікаря: діагноз, статус та захист завершених візитів."""
+
     _name = 'hr.hospital.visit'
     _description = 'Візит пацієнта'
     _order = 'scheduled_date desc'
@@ -64,6 +66,7 @@ class HrHospitalVisit(models.Model):
 
     @api.depends('disease_id')
     def _compute_visit_same_disease_count(self):
+        """Порахувати кількість усіх візитів з таким самим діагнозом."""
         for record in self:
             if record.disease_id:
                 record.visit_same_disease_count = self.env[
@@ -73,6 +76,7 @@ class HrHospitalVisit(models.Model):
                 record.visit_same_disease_count = 0
 
     def action_view_same_disease_visits(self):
+        """Відкрити список усіх візитів з таким самим діагнозом."""
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
@@ -85,6 +89,7 @@ class HrHospitalVisit(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        """Присвоїти номер візиту із секвенції, якщо його не вказано."""
         for vals in vals_list:
             if not vals.get('name') or vals['name'] == '/':
                 vals['name'] = self.env['ir.sequence'].next_by_code(
@@ -93,6 +98,7 @@ class HrHospitalVisit(models.Model):
         return super().create(vals_list)
 
     def write(self, vals):
+        """Заборонити зміну дати, часу, лікаря чи архівацію завершеного візиту."""
         if any(field_name in vals for field_name in self._LOCKED_FIELDS) or (
             vals.get('active') is False
         ):
@@ -113,6 +119,7 @@ class HrHospitalVisit(models.Model):
         return super().write(vals)
 
     def unlink(self):
+        """Заборонити видалення завершеного візиту."""
         for record in self:
             if record.state == 'done':
                 raise UserError(

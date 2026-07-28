@@ -57,6 +57,7 @@
                             <field name="email"/>
                             <field name="insurance_number"/>
                             <field name="personal_doctor_id"/>
+                            <field name="user_id"/>
                         </group>
                     </group>
                     <notebook>

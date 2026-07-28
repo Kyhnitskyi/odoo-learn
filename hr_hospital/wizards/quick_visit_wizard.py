@@ -2,6 +2,8 @@ from odoo import fields, models
 
 
 class QuickVisitWizard(models.TransientModel):
+    """Візард швидкого запису пацієнта на прийом до лікаря."""
+
     _name = 'quick.visit.wizard'
     _description = 'Швидкий запис на прийом'
 
@@ -29,6 +31,7 @@ class QuickVisitWizard(models.TransientModel):
     )
 
     def action_create_visit(self):
+        """Створити візит і відкрити його форму."""
         self.ensure_one()
         visit = self.env['hr.hospital.visit'].create({
             'patient_id': self.patient_id.id,

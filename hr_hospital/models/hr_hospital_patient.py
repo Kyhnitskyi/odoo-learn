@@ -2,6 +2,8 @@ from odoo import api, fields, models
 
 
 class HrHospitalPatient(models.Model):
+    """Пацієнт: контактні дані, персональний лікар, історія та візити."""
+
     _name = 'hr.hospital.patient'
     _inherit = ['hr.hospital.medic.info']
     _description = 'Пацієнт'
@@ -26,6 +28,14 @@ class HrHospitalPatient(models.Model):
         string='Персональний лікар',
         ondelete='set null',
     )
+    user_id = fields.Many2one(
+        comodel_name='res.users',
+        string='Користувач',
+        ondelete='set null',
+        help='Користувач системи, пов’язаний із цим пацієнтом. '
+             'Використовується для обмеження доступу пацієнта '
+             'лише до власних візитів.',
+    )
     doctor_history_ids = fields.One2many(
         comodel_name='hr.hospital.doctor.history',
         inverse_name='patient_id',
@@ -47,10 +57,12 @@ class HrHospitalPatient(models.Model):
 
     @api.depends('visit_ids')
     def _compute_visit_count(self):
+        """Порахувати кількість візитів пацієнта."""
         for record in self:
             record.visit_count = len(record.visit_ids)
 
     def action_view_visits(self):
+        """Відкрити список візитів цього пацієнта."""
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
@@ -63,6 +75,7 @@ class HrHospitalPatient(models.Model):
         }
 
     def action_quick_visit_wizard(self):
+        """Відкрити візард швидкого запису пацієнта до лікаря."""
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',

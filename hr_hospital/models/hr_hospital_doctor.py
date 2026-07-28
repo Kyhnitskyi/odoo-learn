@@ -3,6 +3,8 @@ from odoo.exceptions import ValidationError
 
 
 class HrHospitalDoctor(models.Model):
+    """Лікар: спеціалізація, категорія, ментор та інтерни, пацієнти і візити."""
+
     _name = 'hr.hospital.doctor'
     _inherit = ['hr.hospital.medic.info']
     _description = 'Лікар'
@@ -68,11 +70,13 @@ class HrHospitalDoctor(models.Model):
 
     @api.depends('intern_ids.name')
     def _compute_intern_names(self):
+        """Зібрати ПІБ усіх інтернів лікаря в один рядок через кому."""
         for record in self:
             record.intern_names = ', '.join(record.intern_ids.mapped('name'))
 
     @api.depends('category_id')
     def _compute_is_intern(self):
+        """Визначити, чи належить лікар до категорії "Інтерн"."""
         intern_category = self.env.ref(
             'hr_hospital.doctor_category_intern', raise_if_not_found=False
         )
@@ -82,6 +86,7 @@ class HrHospitalDoctor(models.Model):
             )
 
     def action_quick_visit_to_doctor(self):
+        """Відкрити форму нового візиту з попередньо заповненим лікарем."""
         self.ensure_one()
         return {
             'type': 'ir.actions.act_window',
@@ -94,6 +99,7 @@ class HrHospitalDoctor(models.Model):
 
     @api.constrains('mentor_id')
     def _check_mentor_is_not_intern(self):
+        """Заборонити призначення ментором лікаря, який сам є інтерном."""
         for record in self:
             if record.mentor_id and record.mentor_id.is_intern:
                 raise ValidationError(

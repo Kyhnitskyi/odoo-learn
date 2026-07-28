@@ -4,6 +4,8 @@ from odoo import api, fields, models
 
 
 class DiseaseReportWizard(models.TransientModel):
+    """Візард формування звіту по хворобах за обраний період."""
+
     _name = 'disease.report.wizard'
     _description = 'Звіт по хворобах за місяць'
 
@@ -26,6 +28,7 @@ class DiseaseReportWizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
+        """Попередньо заповнити лікарів, якщо візард відкрито з картки лікаря."""
         res = super().default_get(fields_list)
         active_model = self.env.context.get('active_model')
         active_ids = self.env.context.get('active_ids', [])
@@ -34,6 +37,7 @@ class DiseaseReportWizard(models.TransientModel):
         return res
 
     def action_generate_report(self):
+        """Відкрити візити, згруповані по хворобах, за заданими фільтрами."""
         self.ensure_one()
         domain = []
         if self.doctor_ids:

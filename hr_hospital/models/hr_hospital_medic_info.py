@@ -4,6 +4,8 @@ from odoo import api, fields, models
 
 
 class HrHospitalMedicInfo(models.AbstractModel):
+    """Спільна загальна медична інформація для лікаря та пацієнта."""
+
     _name = 'hr.hospital.medic.info'
     _description = 'Загальна медична інформація'
 
@@ -37,6 +39,7 @@ class HrHospitalMedicInfo(models.AbstractModel):
 
     @api.depends('birth_date')
     def _compute_age(self):
+        """Обчислити повний вік у роках на основі дати народження."""
         today = date.today()
         for record in self:
             if record.birth_date:

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Категорія модуля для групуванням прав у налаштуваннях користувачів -->
+    <record id="module_category_hr_hospital" model="ir.module.category">
+        <field name="name">Лікарня</field>
+        <field name="description">Права доступу для модуля управління лікарнею</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Привілей: групує рівні доступу лікарні в одне selection-поле в Settings > Users -->
+    <record id="privilege_hr_hospital" model="res.groups.privilege">
+        <field name="name">Лікарня</field>
+        <field name="category_id" ref="module_category_hr_hospital"/>
+    </record>
+
+    <!-- Пацієнт: базовий рівень доступу -->
+    <record id="group_hr_hospital_patient" model="res.groups">
+        <field name="name">Пацієнт</field>
+        <field name="privilege_id" ref="privilege_hr_hospital"/>
+        <field name="comment">Базовий доступ пацієнта.</field>
+    </record>
+
+    <!-- Інтерн: успадковує права Пацієнта -->
+    <record id="group_hr_hospital_intern" model="res.groups">
+        <field name="name">Інтерн</field>
+        <field name="privilege_id" ref="privilege_hr_hospital"/>
+        <field name="implied_ids" eval="[(4, ref('group_hr_hospital_patient'))]"/>
+        <field name="comment">Інтерн. Успадковує права Пацієнта.</field>
+    </record>
+
+    <!-- Лікар: успадковує права Інтерна -->
+    <record id="group_hr_hospital_doctor" model="res.groups">
+        <field name="name">Лікар</field>
+        <field name="privilege_id" ref="privilege_hr_hospital"/>
+        <field name="implied_ids" eval="[(4, ref('group_hr_hospital_intern'))]"/>
+        <field name="comment">Лікар. Успадковує права Інтерна.</field>
+    </record>
+
+    <!-- Менеджер: успадковує права Лікаря -->
+    <record id="group_hr_hospital_manager" model="res.groups">
+        <field name="name">Менеджер</field>
+        <field name="privilege_id" ref="privilege_hr_hospital"/>
+        <field name="implied_ids" eval="[(4, ref('group_hr_hospital_doctor'))]"/>
+        <field name="comment">Менеджер лікарні. Успадковує права Лікаря.</field>
+    </record>
+
+    <!-- Адміністратор: успадковує права Менеджера -->
+    <record id="group_hr_hospital_administrator" model="res.groups">
+        <field name="name">Адміністратор</field>
+        <field name="privilege_id" ref="privilege_hr_hospital"/>
+        <field name="implied_ids" eval="[(4, ref('group_hr_hospital_manager'))]"/>
+        <field name="comment">Адміністратор лікарні. Повний доступ. Успадковує права Менеджера.</field>
+    </record>
+
+    <!-- Правила доступу до візитів -->
+
+    <!-- Пацієнт: бачить та працює лише з власними візитами -->
+    <record id="visit_rule_patient_own" model="ir.rule">
+        <field name="name">Пацієнт: лише власні візити</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="groups" eval="[(4, ref('group_hr_hospital_patient'))]"/>
+        <field name="domain_force">[('patient_id.user_id', '=', user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- Інтерн: перегляд і редагування власних візитів (де він лікар) -->
+    <record id="visit_rule_intern_own" model="ir.rule">
+        <field name="name">Інтерн: власні візити</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="groups" eval="[(4, ref('group_hr_hospital_intern'))]"/>
+        <field name="domain_force">[('doctor_id.user_id', '=', user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Лікар: перегляд і редагування власних візитів та візитів своїх інтернів -->
+    <record id="visit_rule_doctor_own_and_interns" model="ir.rule">
+        <field name="name">Лікар: власні візити та візити інтернів</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="groups" eval="[(4, ref('group_hr_hospital_doctor'))]"/>
+        <field name="domain_force">['|', ('doctor_id.user_id', '=', user.id), ('doctor_id.mentor_id.user_id', '=', user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Менеджер: перегляд усіх візитів (без редагування) -->
+    <record id="visit_rule_manager_all" model="ir.rule">
+        <field name="name">Менеджер: усі візити (перегляд)</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="groups" eval="[(4, ref('group_hr_hospital_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Адміністратор: право видалення будь-яких даних модуля -->
+    <record id="visit_rule_administrator_unlink" model="ir.rule">
+        <field name="name">Адміністратор: видалення візитів</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="groups" eval="[(4, ref('group_hr_hospital_administrator'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="patient_rule_administrator_unlink" model="ir.rule">
+        <field name="name">Адміністратор: видалення пацієнтів</field>
+        <field name="model_id" ref="model_hr_hospital_patient"/>
+        <field name="groups" eval="[(4, ref('group_hr_hospital_administrator'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="doctor_rule_administrator_unlink" model="ir.rule">
+        <field name="name">Адміністратор: видалення лікарів</field>
+        <field name="model_id" ref="model_hr_hospital_doctor"/>
+        <field name="groups" eval="[(4, ref('group_hr_hospital_administrator'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="disease_rule_administrator_unlink" model="ir.rule">
+        <field name="name">Адміністратор: видалення хвороб</field>
+        <field name="model_id" ref="model_hr_hospital_disease"/>
+        <field name="groups" eval="[(4, ref('group_hr_hospital_administrator'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="doctor_category_rule_administrator_unlink" model="ir.rule">
+        <field name="name">Адміністратор: видалення категорій лікарів</field>
+        <field name="model_id" ref="model_hr_hospital_doctor_category"/>
+        <field name="groups" eval="[(4, ref('group_hr_hospital_administrator'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="doctor_history_rule_administrator_unlink" model="ir.rule">
+        <field name="name">Адміністратор: видалення історії лікарів пацієнта</field>
+        <field name="model_id" ref="model_hr_hospital_doctor_history"/>
+        <field name="groups" eval="[(4, ref('group_hr_hospital_administrator'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+</odoo>
